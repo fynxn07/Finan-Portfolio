@@ -32,7 +32,7 @@ const Preloader = ({ onComplete }) => {
             className="relative text-5xl md:text-7xl font-black tracking-tighter"
           >
             <div className="text-red-900/30">
-              Finan Roshan<span className="text-red-900/30">.</span>
+              Finan Roshan
             </div>
 
             <motion.div
