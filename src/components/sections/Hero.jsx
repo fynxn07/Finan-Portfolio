@@ -129,11 +129,10 @@
 
 // export default Hero;
 
+
 import React, { useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import heroVideo from '../../assets/hero video/vedio.mp4';
-// You need to add this image yourself — see the note below the code for
-// exactly how to generate it from your existing video in ~10 seconds.
 import heroPoster from '../../assets/about/posters.png';
 
 const easeOut = [0.22, 1, 0.36, 1];
@@ -162,12 +161,11 @@ const Hero = () => {
 
   return (
     <section id="home" className="relative w-full min-h-screen h-[100dvh] overflow-hidden bg-black scroll-mt-0">
-      {/* poster: this is the actual fix for the black screen. Without it,
-          browsers (mobile especially) don't reliably paint a paused
-          video's first frame at all — there's simply nothing to draw
-          until playback starts. A poster is a plain image, so it paints
-          instantly and unconditionally, no decode/autoplay race. The
-          video element then covers it the moment it actually plays. */}
+      {/* poster: fixes the black-screen issue — browsers (mobile especially)
+          don't reliably paint a paused video's first frame at all, there's
+          simply nothing to draw until playback starts. A poster is a plain
+          image, so it paints instantly and unconditionally. The video
+          element covers it the moment it actually plays. */}
       <video
         ref={videoRef}
         muted={false}
@@ -192,10 +190,7 @@ const Hero = () => {
             transition={{ duration: 0.7, ease: easeOut }}
             className="text-white text-3xl md:text-5xl font-bold mb-4 tracking-tight"
           >
-            Hi, I'm a Python <br />
-            <span className="text-transparent [-webkit-text-stroke:1.5px_white]">
-              Full Stack Developer
-            </span>
+            Hi, I'm a Python <br /> <span className="text-transparent [-webkit-text-stroke:1.5px_black]">Full Stack Developer</span>
           </motion.h1>
 
           <motion.p

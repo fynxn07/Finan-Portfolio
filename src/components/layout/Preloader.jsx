@@ -24,7 +24,12 @@ const Preloader = ({ onComplete }) => {
           initial={{ y: 0 }}
           exit={{ y: '-100%' }}
           transition={{ duration: 1.2, ease: [0.76, 0, 0.24, 1] }}
-          className="fixed inset-0 w-full h-screen bg-[#ff2a2a] z-[100000] flex items-center justify-center"
+          // Removed "w-full h-screen" — they were conflicting with
+          // "inset-0" and forcing the element back down to the shorter
+          // 100vh height (which excludes the mobile address bar). "fixed
+          // inset-0" alone already anchors to all four edges of the real
+          // visible viewport, no vh unit involved, so it can't leave a gap.
+          className="fixed inset-0 bg-[#ff2a2a] z-[100000] flex items-center justify-center"
         >
           <motion.div
             exit={{ opacity: 0, scale: 0.95, y: -20 }}
