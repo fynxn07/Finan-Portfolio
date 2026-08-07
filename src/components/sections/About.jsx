@@ -2,10 +2,8 @@
 // import { motion, useInView } from 'framer-motion';
 // import { SiReact, SiPython, SiDjango, SiPostgresql } from 'react-icons/si';
 // import { FiBriefcase } from 'react-icons/fi';
-
-// // Keep your existing profile photo import — this is the same asset
-// // your original badge used, just re-wired into the new layout.
-// import stackImage from '../assets/about/image.png';
+// import stackImage from '../../assets/about/image.png';
+// import GlowOrbs from '../ui/GlowOrbs';
 
 // const stats = [
 //   { label: 'Years Learning', value: 3, suffix: '+' },
@@ -30,15 +28,26 @@
 
 //   useEffect(() => {
 //     if (!inView) return;
+
+//     let frameId;
+
 //     const duration = 1200;
 //     const start = performance.now();
+
 //     const tick = (now) => {
 //       const progress = Math.min((now - start) / duration, 1);
 //       const eased = 1 - Math.pow(1 - progress, 3);
+
 //       setCount(Math.round(eased * value));
-//       if (progress < 1) requestAnimationFrame(tick);
+
+//       if (progress < 1) {
+//         frameId = requestAnimationFrame(tick);
+//       }
 //     };
-//     requestAnimationFrame(tick);
+
+//     frameId = requestAnimationFrame(tick);
+
+//     return () => cancelAnimationFrame(frameId);
 //   }, [inView, value]);
 
 //   return (
@@ -48,19 +57,16 @@
 //   );
 // };
 
-// const Abouts = () => {
+// const About = () => {
 //   return (
 //     <section
 //       id="about"
 //       className="relative bg-[#ff2a2a] pt-28 pb-40 px-6 md:px-12 w-full overflow-hidden font-sans"
 //     >
-//       {/* Depth layer — soft dark glow blobs so the red isn't flat */}
-//       <div className="absolute top-10 -left-20 w-[420px] h-[420px] rounded-full bg-black/20 blur-[120px] pointer-events-none" />
-//       <div className="absolute bottom-0 right-0 w-[360px] h-[360px] rounded-full bg-black/15 blur-[110px] pointer-events-none" />
+//       <GlowOrbs tone="dark" />
 
 //       <div className="max-w-6xl mx-auto relative z-20">
 
-//         {/* Eyebrow */}
 //         <motion.span
 //           initial={{ opacity: 0, y: 16 }}
 //           whileInView={{ opacity: 1, y: 0 }}
@@ -72,7 +78,6 @@
 
 //         <div className="flex flex-col md:flex-row gap-16 items-start">
 
-//           {/* Left: Animated ID badge */}
 //           <motion.div
 //             initial={{ opacity: 0, y: -40, rotate: -6 }}
 //             whileInView={{ opacity: 1, y: 0, rotate: -3 }}
@@ -82,18 +87,21 @@
 //             className="flex flex-col items-center w-full md:w-[300px] shrink-0 mt-8 md:mt-4 mx-auto md:mx-0"
 //           >
 //             <div className="relative flex justify-center w-full">
-//               {/* Lanyard string */}
 //               <div className="absolute -top-28 left-1/2 w-2.5 h-36 bg-black/80 -translate-x-1/2 shadow-inner z-0 rounded-full" />
-//               {/* Lanyard clip */}
 //               <div className="absolute -top-5 left-1/2 w-6 h-11 bg-gray-300 rounded border border-gray-400 -translate-x-1/2 z-10 shadow-[0_2px_10px_rgba(0,0,0,0.3)]" />
 
-//               {/* Badge card — dark glass, matching the rest of the site's card language */}
 //               <div className="relative bg-black/90 backdrop-blur-xl w-full max-w-[280px] rounded-2xl p-3 shadow-[0_25px_50px_rgba(0,0,0,0.45)] border border-white/10 z-20">
 //                 <div className="absolute -top-3 left-1/2 w-16 h-6 bg-black/90 rounded-t-xl -translate-x-1/2 flex justify-center items-center">
 //                   <div className="w-8 h-2 bg-black/40 rounded-full shadow-inner" />
 //                 </div>
 //                 <div className="w-full aspect-[3/4] overflow-hidden rounded-xl bg-white/5 border border-white/10">
-//                   <img src={stackImage} alt="Finan Roshan" className="w-full h-full object-cover" />
+//                   <img
+//                     src={stackImage}
+//                     alt="Finan Roshan"
+//                     loading="lazy"
+//                     decoding="async"
+//                     className="w-full h-full object-cover"
+//                   />
 //                 </div>
 //                 <div className="pt-3 pb-1 text-center">
 //                   <p className="text-white font-black text-sm">Finan Roshan K</p>
@@ -103,7 +111,6 @@
 //             </div>
 //           </motion.div>
 
-//           {/* Right: Bio + stats */}
 //           <div className="flex-1 w-full">
 //             <motion.h2
 //               initial={{ opacity: 0, y: 24 }}
@@ -140,7 +147,6 @@
 //               not just tutorials.
 //             </motion.p>
 
-//             {/* Currently card */}
 //             <motion.div
 //               initial={{ opacity: 0, y: 24 }}
 //               whileInView={{ opacity: 1, y: 0 }}
@@ -159,7 +165,6 @@
 //               </div>
 //             </motion.div>
 
-//             {/* Stat cards */}
 //             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-10">
 //               {stats.map((s, i) => (
 //                 <motion.div
@@ -168,7 +173,7 @@
 //                   whileInView={{ opacity: 1, y: 0 }}
 //                   viewport={{ once: true }}
 //                   transition={{ delay: 0.35 + i * 0.08, ease: easeOut }}
-//                   whileHover={{ y: -4 }}
+//                   whileHover={{ y: -4,scale: 1.06 }}
 //                   className="bg-black/80 backdrop-blur-xl border border-white/10 rounded-2xl p-4 text-center shadow-[0_10px_30px_rgba(0,0,0,0.3)]"
 //                 >
 //                   <p className="text-white text-2xl md:text-3xl font-black mb-1">
@@ -181,7 +186,6 @@
 //               ))}
 //             </div>
 
-//             {/* Tech icon cards — replaces the plain floating logos */}
 //             <div className="flex flex-wrap gap-4">
 //               {techCards.map(({ icon: Icon, name, color }, i) => (
 //                 <motion.div
@@ -190,6 +194,7 @@
 //                   whileInView={{ opacity: 1, scale: 1 }}
 //                   viewport={{ once: true }}
 //                   transition={{ delay: 0.6 + i * 0.08, ease: easeOut }}
+//                   style={{ willChange: "transform" }}
 //                   whileHover={{ y: -6, scale: 1.06 }}
 //                   className="group flex items-center gap-3 bg-black/85 backdrop-blur-xl border border-white/10 rounded-2xl px-4 py-3 shadow-[0_10px_25px_rgba(0,0,0,0.3)] hover:border-white/25 transition-colors duration-300"
 //                 >
@@ -202,14 +207,13 @@
 //         </div>
 //       </div>
 
-//       {/* Torn paper divider — colored to match the section that follows (black Skills section) */}
+//       {/* Torn paper divider — matches the WHITE Services section that follows */}
 //       <div className="absolute bottom-0 left-0 w-full pointer-events-none z-30 translate-y-1">
 //         <svg viewBox="0 0 1200 120" preserveAspectRatio="none" className="w-full h-12 md:h-20 fill-white">
 //           <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V95.8C59.71,118.08,130.83,119.62,189.5,99.8,242.79,81.82,282.88,63.6,321.39,56.44Z" />
 //         </svg>
 //       </div>
 
-//       {/* Decorative floating stars, animated instead of just CSS pulse */}
 //       <motion.div
 //         animate={{ y: [0, -12, 0], rotate: [0, 8, 0] }}
 //         transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
@@ -232,7 +236,7 @@
 //   );
 // };
 
-// export default Abouts;
+// export default About;
 
 
 import React, { useState, useEffect, useRef } from 'react';
@@ -298,7 +302,12 @@ const About = () => {
   return (
     <section
       id="about"
-      className="relative bg-[#ff2a2a] pt-28 pb-40 px-6 md:px-12 w-full overflow-hidden font-sans"
+      // Gradient instead of a flat color — a single flat dark red directly
+      // under a bright video created a hard, ugly seam. This starts bright
+      // (matching the video's tone right at the transition point) and
+      // deepens toward the bottom, so it reads as one continuous blended
+      // surface instead of two mismatched blocks stacked on each other.
+      className="relative bg-gradient-to-b from-[#ff2a2a] via-[#d21414] to-[#8a0203] pt-28 pb-40 px-6 md:px-12 w-full overflow-hidden font-sans"
     >
       <GlowOrbs tone="dark" />
 
@@ -410,7 +419,7 @@ const About = () => {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: 0.35 + i * 0.08, ease: easeOut }}
-                  whileHover={{ y: -4,scale: 1.06 }}
+                  whileHover={{ y: -4, scale: 1.06 }}
                   className="bg-black/80 backdrop-blur-xl border border-white/10 rounded-2xl p-4 text-center shadow-[0_10px_30px_rgba(0,0,0,0.3)]"
                 >
                   <p className="text-white text-2xl md:text-3xl font-black mb-1">

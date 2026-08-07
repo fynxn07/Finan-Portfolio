@@ -169,7 +169,7 @@ const Navbar = () => {
       <div className="max-w-7xl mx-auto px-6 md:px-12 flex justify-between items-center relative z-[60]">
         <div className="flex items-center">
           <a href="#home" className="text-white text-2xl font-black tracking-tight">
-            Finan Roshan<span className="text-red-500">.</span>
+            Finan Roshan
           </a>
         </div>
 
