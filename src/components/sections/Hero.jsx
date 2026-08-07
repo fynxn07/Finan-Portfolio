@@ -132,6 +132,9 @@
 import React, { useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import heroVideo from '../../assets/hero video/vedio.mp4';
+// You need to add this image yourself — see the note below the code for
+// exactly how to generate it from your existing video in ~10 seconds.
+import heroPoster from '../../assets/about/posters.png';
 
 const easeOut = [0.22, 1, 0.36, 1];
 
@@ -158,22 +161,19 @@ const Hero = () => {
   };
 
   return (
-    // h-[100dvh] instead of h-screen — 100vh on mobile counts the address
-    // bar into its calculation, so h-screen is actually SHORTER than the
-    // real visible viewport, which is why the next (red) section was
-    // peeking through at the bottom. 100dvh tracks the real visible area.
-    // min-h-screen stays as a fallback for browsers without dvh support.
     <section id="home" className="relative w-full min-h-screen h-[100dvh] overflow-hidden bg-black scroll-mt-0">
-      {/* preload="auto" instead of "metadata" — this is above-the-fold
-          content, it needs to paint a visible frame immediately. With
-          "metadata" the browser only fetched the video's dimensions, not
-          actual frame data, so until you tapped play there was nothing to
-          render — that's what caused the black gap on mobile. */}
+      {/* poster: this is the actual fix for the black screen. Without it,
+          browsers (mobile especially) don't reliably paint a paused
+          video's first frame at all — there's simply nothing to draw
+          until playback starts. A poster is a plain image, so it paints
+          instantly and unconditionally, no decode/autoplay race. The
+          video element then covers it the moment it actually plays. */}
       <video
         ref={videoRef}
         muted={false}
         playsInline
         preload="auto"
+        poster={heroPoster}
         onEnded={() => setIsPlaying(false)}
         onPlay={() => setIsPlaying(true)}
         onPause={() => setIsPlaying(false)}
@@ -193,9 +193,6 @@ const Hero = () => {
             className="text-white text-3xl md:text-5xl font-bold mb-4 tracking-tight"
           >
             Hi, I'm a Python <br />
-            {/* Was a BLACK stroke on transparent fill — invisible against
-                a dark video background. White stroke stays visible
-                regardless of the video frame underneath. */}
             <span className="text-transparent [-webkit-text-stroke:1.5px_white]">
               Full Stack Developer
             </span>
