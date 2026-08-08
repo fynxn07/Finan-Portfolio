@@ -265,6 +265,174 @@
 // export default Hero;
 
 
+// import React, { useRef, useState } from 'react';
+// import { motion } from 'framer-motion';
+// import heroVideo from '../../assets/hero video/vedio.mp4';
+// import heroPoster from '../../assets/about/posters.png';
+
+// const easeOut = [0.22, 1, 0.36, 1];
+
+// const Hero = () => {
+//   const videoRef = useRef(null);
+//   const [isPlaying, setIsPlaying] = useState(false);
+
+//   const toggleVideo = async (e) => {
+//     e.stopPropagation();
+
+//     if (!videoRef.current) return;
+
+//     if (videoRef.current.paused) {
+//       try {
+//         await videoRef.current.play();
+//         setIsPlaying(true);
+//       } catch (err) {
+//         console.error(err);
+//       }
+//     } else {
+//       videoRef.current.pause();
+//       setIsPlaying(false);
+//     }
+//   };
+
+//   return (
+//     // h-svh instead of h-dvh — "small viewport height" is calculated
+//     // assuming the browser's address bar/toolbar is fully expanded (the
+//     // worst case), so it can never come up short the way dvh occasionally
+//     // did during scroll/load transitions on iOS Safari. bg color now
+//     // matches the brand red instead of black, since on mobile there's a
+//     // visible strip below the video (see next comment) that needs to
+//     // blend in, not show as a black bar.
+//     <section id="home" className="relative w-full min-h-screen h-svh overflow-hidden bg-[#ff2a2a] scroll-mt-0">
+//       {/* Video is a landscape 1280x720 source being forced into a tall
+//           portrait phone screen. object-cover at full height mathematically
+//           has to crop most of the width away to fill that — that's the
+//           "too close/zoomed in" feeling, not a bug, just geometry.
+//           Constraining the video's own box to h-[68svh] (not full height)
+//           on mobile means less height needs covering, so less crop/scale
+//           is needed — more of the original frame stays visible, giving a
+//           "zoomed out", more composed look. The remaining space below is
+//           filled by the section's own red background instead of forcing
+//           an edge-to-edge crop. md:h-full restores the exact original
+//           full-bleed desktop behavior, completely unchanged. */}
+//       <video
+//         ref={videoRef}
+//         muted={false}
+//         playsInline
+//         preload="auto"
+//         poster={heroPoster}
+//         onEnded={() => setIsPlaying(false)}
+//         onPlay={() => setIsPlaying(true)}
+//         onPause={() => setIsPlaying(false)}
+//         className="absolute top-0 left-0 w-full h-[68svh] md:h-full object-cover object-top md:object-center z-0"
+//       >
+//         <source src={heroVideo} type="video/mp4" />
+//         Your browser does not support the video tag.
+//       </video>
+
+//       <div className="absolute inset-0 z-20 px-6 pb-10 md:pb-[8%] md:px-12 max-w-7xl mx-auto flex flex-col md:flex-row justify-end md:justify-between items-start md:items-end text-left w-full">
+
+//         <div className="flex flex-col items-start text-left max-w-2xl w-full">
+//           <motion.h1
+//             initial={{ opacity: 0, y: 24 }}
+//             animate={{ opacity: 1, y: 0 }}
+//             transition={{ duration: 0.7, ease: easeOut }}
+//             className="text-white text-3xl md:text-5xl font-bold mb-4 tracking-tight"
+//           >
+//             Hi, I'm a Python <br />
+//             {/* Solid white fill + black stroke — same font as the rest of
+//                 the heading (no serif/italic swap this time), just with a
+//                 visible mixed white/black color instead of the old
+//                 see-through outline-only version. */}
+//             <span className="text-transparent [-webkit-text-stroke:1.5px_black]">Full Stack Developer</span>
+//           </motion.h1>
+
+//           <motion.p
+//             initial={{ opacity: 0, y: 24 }}
+//             animate={{ opacity: 1, y: 0 }}
+//             transition={{ duration: 0.7, ease: easeOut, delay: 0.15 }}
+//             className="text-white text-sm md:text-lg font-semibold mb-8 max-w-md drop-shadow-md"
+//           >
+//             I build fast, scalable and modern web applications using React, Python and Tailwind CSS.
+//           </motion.p>
+
+//           <motion.div
+//             initial={{ opacity: 0, y: 24 }}
+//             animate={{ opacity: 1, y: 0 }}
+//             transition={{ duration: 0.7, ease: easeOut, delay: 0.3 }}
+//             className="flex flex-row flex-wrap items-center gap-3 w-full"
+//           >
+//             <button
+//               onClick={() =>
+//                 document.getElementById("projects")?.scrollIntoView({
+//                   behavior: "smooth",
+//                 })
+//               }
+//               className="px-4 py-2 md:px-6 md:py-2 text-xs md:text-base rounded-full bg-white text-black font-semibold hover:bg-gray-200 transition-all duration-300 transform hover:scale-105 shadow-md"
+//             >
+//               View My Work
+//             </button>
+
+//             <button
+//               onClick={() =>
+//                 document.getElementById("contact")?.scrollIntoView({
+//                   behavior: "smooth",
+//                 })
+//               }
+//               className="px-4 py-2 md:px-6 md:py-2 text-xs md:text-base rounded-full bg-black/40 border border-white text-white font-semibold hover:bg-black/60 transition-all duration-300 backdrop-blur-md"
+//             >
+//               Contact Me
+//             </button>
+//           </motion.div>
+//         </div>
+
+//         <motion.div
+//           initial={{ opacity: 0, scale: 0.85 }}
+//           animate={{ opacity: 1, scale: 1 }}
+//           transition={{ duration: 0.6, ease: easeOut, delay: 0.45 }}
+//           className="mt-8 md:mt-0 flex flex-row md:flex-col items-center gap-2 md:gap-3 cursor-pointer group self-start md:self-auto"
+//           onClick={toggleVideo}
+//         >
+//           <div className="w-12 h-12 md:w-20 md:h-20 rounded-full border border-white/30 bg-black/20 backdrop-blur-md flex justify-center items-center group-hover:scale-110 group-hover:bg-[#ff2a2a] transition-all duration-500 shadow-[0_0_30px_rgba(255,255,255,0.1)] group-hover:shadow-[0_0_40px_rgba(255,42,42,0.6)]">
+//             {!isPlaying ? (
+//               <svg className="w-5 h-5 md:w-8 md:h-8 text-white ml-0.5 md:ml-1" fill="currentColor" viewBox="0 0 24 24">
+//                 <path d="M8 5v14l11-7z" />
+//               </svg>
+//             ) : (
+//               <svg className="w-5 h-5 md:w-8 md:h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
+//                 <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
+//               </svg>
+//             )}
+//           </div>
+//           <span className="text-white text-[10px] md:text-xs font-bold tracking-widest uppercase opacity-70 group-hover:opacity-100 transition-opacity">
+//             {!isPlaying ? "Play Reel" : "Pause"}
+//           </span>
+//         </motion.div>
+//       </div>
+
+//       <motion.div
+//         initial={{ opacity: 0 }}
+//         animate={{ opacity: 1 }}
+//         transition={{ delay: 0.7 }}
+//         className="hidden md:block absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20 pointer-events-none"
+//       >
+//         <div className="animate-bounce">
+//           <svg
+//             className="w-6 h-6 text-black drop-shadow-[0_1px_2px_rgba(255,255,255,0.6)]"
+//             fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="3"
+//             viewBox="0 0 24 24" stroke="currentColor"
+//           >
+//             <path d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+//           </svg>
+//         </div>
+//       </motion.div>
+
+//     </section>
+//   );
+// };
+
+// export default Hero;
+
+
 import React, { useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import heroVideo from '../../assets/hero video/vedio.mp4';
@@ -295,25 +463,25 @@ const Hero = () => {
   };
 
   return (
-    // h-svh instead of h-dvh — "small viewport height" is calculated
-    // assuming the browser's address bar/toolbar is fully expanded (the
-    // worst case), so it can never come up short the way dvh occasionally
-    // did during scroll/load transitions on iOS Safari. bg color now
-    // matches the brand red instead of black, since on mobile there's a
-    // visible strip below the video (see next comment) that needs to
-    // blend in, not show as a black bar.
-    <section id="home" className="relative w-full min-h-screen h-svh overflow-hidden bg-[#ff2a2a] scroll-mt-0">
-      {/* Video is a landscape 1280x720 source being forced into a tall
-          portrait phone screen. object-cover at full height mathematically
-          has to crop most of the width away to fill that — that's the
-          "too close/zoomed in" feeling, not a bug, just geometry.
-          Constraining the video's own box to h-[68svh] (not full height)
-          on mobile means less height needs covering, so less crop/scale
-          is needed — more of the original frame stays visible, giving a
-          "zoomed out", more composed look. The remaining space below is
-          filled by the section's own red background instead of forcing
-          an edge-to-edge crop. md:h-full restores the exact original
-          full-bleed desktop behavior, completely unchanged. */}
+    // h-svh: guarantees full coverage even in the worst-case (address bar
+    // fully expanded), so it can never come up short during scroll/load.
+    <section id="home" className="relative w-full min-h-screen h-svh overflow-hidden bg-black scroll-mt-0">
+
+      {/* Mobile-only base gradient (dark maroon -> near-black), sits behind
+          the dimmed video so it reads through where the video is
+          translucent — this is the "cinematic" backdrop from your
+          reference. md:hidden means desktop never sees this at all. */}
+      <div
+        aria-hidden="true"
+        className="md:hidden absolute inset-0 z-0"
+        style={{ background: 'linear-gradient(180deg, #690003 0%, #131313 100%)' }}
+      />
+
+      {/* Same single video element for both breakpoints — Play Reel keeps
+          working identically either way, only the styling changes:
+          - Mobile: opacity-70 (dimmed, moody, blends into the gradient)
+          - Desktop (md:): opacity-100, exactly your original bright
+            full-bleed video, untouched. */}
       <video
         ref={videoRef}
         muted={false}
@@ -323,13 +491,21 @@ const Hero = () => {
         onEnded={() => setIsPlaying(false)}
         onPlay={() => setIsPlaying(true)}
         onPause={() => setIsPlaying(false)}
-        className="absolute top-0 left-0 w-full h-[68svh] md:h-full object-cover object-top md:object-center z-0"
+        className="absolute top-0 left-0 w-full h-full object-cover object-top md:object-center opacity-70 md:opacity-100 z-10"
       >
         <source src={heroVideo} type="video/mp4" />
         Your browser does not support the video tag.
       </video>
 
-      <div className="absolute inset-0 z-20 px-6 pb-10 md:pb-[8%] md:px-12 max-w-7xl mx-auto flex flex-col md:flex-row justify-end md:justify-between items-start md:items-end text-left w-full">
+      {/* Mobile-only bottom fade for text contrast against the photo —
+          matches the reference's gradient-overlay-for-readability layer.
+          Desktop never gets this (md:hidden), stays exactly as-is. */}
+      <div
+        aria-hidden="true"
+        className="md:hidden pointer-events-none absolute inset-0 z-10 bg-gradient-to-t from-black via-black/75 to-transparent"
+      />
+
+      <div className="absolute inset-0 z-20 px-6 pb-12 md:pb-[8%] md:px-12 max-w-7xl mx-auto flex flex-col md:flex-row justify-end md:justify-between items-start md:items-end text-left w-full">
 
         <div className="flex flex-col items-start text-left max-w-2xl w-full">
           <motion.h1
@@ -339,18 +515,20 @@ const Hero = () => {
             className="text-white text-3xl md:text-5xl font-bold mb-4 tracking-tight"
           >
             Hi, I'm a Python <br />
-            {/* Solid white fill + black stroke — same font as the rest of
-                the heading (no serif/italic swap this time), just with a
-                visible mixed white/black color instead of the old
-                see-through outline-only version. */}
-            <span className="text-transparent [-webkit-text-stroke:1.5px_black]">Full Stack Developer</span>
+            {/* Mobile: muted rose/tan outline (like the reference's
+                "outline" color #ae8782) — reads as elegant against the
+                dark gradient instead of harsh black-on-black.
+                Desktop (md:): your original solid black stroke, unchanged. */}
+            <span className="text-transparent [-webkit-text-stroke:1.5px_#ae8782] md:[-webkit-text-stroke:1.5px_black] uppercase md:normal-case tracking-tight">
+              Full Stack Developer
+            </span>
           </motion.h1>
 
           <motion.p
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, ease: easeOut, delay: 0.15 }}
-            className="text-white text-sm md:text-lg font-semibold mb-8 max-w-md drop-shadow-md"
+            className="text-white/80 md:text-white text-sm md:text-lg font-semibold mb-8 max-w-md drop-shadow-md"
           >
             I build fast, scalable and modern web applications using React, Python and Tailwind CSS.
           </motion.p>
@@ -359,7 +537,7 @@ const Hero = () => {
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, ease: easeOut, delay: 0.3 }}
-            className="flex flex-row flex-wrap items-center gap-3 w-full"
+            className="flex flex-row items-center gap-3 w-full"
           >
             <button
               onClick={() =>
@@ -367,7 +545,7 @@ const Hero = () => {
                   behavior: "smooth",
                 })
               }
-              className="px-4 py-2 md:px-6 md:py-2 text-xs md:text-base rounded-full bg-white text-black font-semibold hover:bg-gray-200 transition-all duration-300 transform hover:scale-105 shadow-md"
+              className="flex-1 md:flex-none px-4 py-3 md:py-2 md:px-6 text-xs md:text-base rounded-full bg-white text-black font-semibold hover:bg-gray-200 transition-all duration-300 transform hover:scale-105 shadow-md text-center"
             >
               View My Work
             </button>
@@ -378,7 +556,7 @@ const Hero = () => {
                   behavior: "smooth",
                 })
               }
-              className="px-4 py-2 md:px-6 md:py-2 text-xs md:text-base rounded-full bg-black/40 border border-white text-white font-semibold hover:bg-black/60 transition-all duration-300 backdrop-blur-md"
+              className="flex-1 md:flex-none px-4 py-3 md:py-2 md:px-6 text-xs md:text-base rounded-full bg-black/40 border border-white/70 md:border-white text-white font-semibold hover:bg-black/60 transition-all duration-300 backdrop-blur-md text-center"
             >
               Contact Me
             </button>
@@ -389,10 +567,10 @@ const Hero = () => {
           initial={{ opacity: 0, scale: 0.85 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.6, ease: easeOut, delay: 0.45 }}
-          className="mt-8 md:mt-0 flex flex-row md:flex-col items-center gap-2 md:gap-3 cursor-pointer group self-start md:self-auto"
+          className="mt-8 md:mt-0 flex flex-row md:flex-col items-center gap-3 md:gap-3 cursor-pointer group self-start md:self-auto"
           onClick={toggleVideo}
         >
-          <div className="w-12 h-12 md:w-20 md:h-20 rounded-full border border-white/30 bg-black/20 backdrop-blur-md flex justify-center items-center group-hover:scale-110 group-hover:bg-[#ff2a2a] transition-all duration-500 shadow-[0_0_30px_rgba(255,255,255,0.1)] group-hover:shadow-[0_0_40px_rgba(255,42,42,0.6)]">
+          <div className="w-12 h-12 md:w-20 md:h-20 rounded-full border border-white/30 bg-black/30 md:bg-black/20 backdrop-blur-md flex justify-center items-center group-hover:scale-110 group-hover:bg-[#ff2a2a] transition-all duration-500 shadow-[0_0_30px_rgba(255,255,255,0.1)] group-hover:shadow-[0_0_40px_rgba(255,42,42,0.6)]">
             {!isPlaying ? (
               <svg className="w-5 h-5 md:w-8 md:h-8 text-white ml-0.5 md:ml-1" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M8 5v14l11-7z" />
@@ -403,7 +581,7 @@ const Hero = () => {
               </svg>
             )}
           </div>
-          <span className="text-white text-[10px] md:text-xs font-bold tracking-widest uppercase opacity-70 group-hover:opacity-100 transition-opacity">
+          <span className="text-white text-[10px] md:text-xs font-bold tracking-widest uppercase opacity-80 md:opacity-70 group-hover:opacity-100 transition-opacity">
             {!isPlaying ? "Play Reel" : "Pause"}
           </span>
         </motion.div>

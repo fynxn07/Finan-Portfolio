@@ -32,6 +32,7 @@ function App() {
   useEffect(() => {
     document.body.style.overflow = isLoading ? "hidden" : "";
 
+
     return () => {
       document.body.style.overflow = "";
     };
