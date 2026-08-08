@@ -539,27 +539,21 @@ const Hero = () => {
             transition={{ duration: 0.7, ease: easeOut, delay: 0.3 }}
             className="flex flex-row items-center gap-3 w-full"
           >
-            <button
-              onClick={() =>
-                document.getElementById("projects")?.scrollIntoView({
-                  behavior: "smooth",
-                })
-              }
-              className="flex-1 md:flex-none px-4 py-3 md:py-2 md:px-6 text-xs md:text-base rounded-full bg-white text-black font-semibold hover:bg-gray-200 transition-all duration-300 transform hover:scale-105 shadow-md text-center"
+            <a
+              href="#projects"
+              className="flex-1 md:flex-none px-4 py-3 md:py-2 md:px-6 text-xs md:text-base rounded-full bg-white text-black font-semibold hover:bg-gray-200 transition-all duration-300 hover:scale-105 shadow-md text-center"
             >
               View My Work
-            </button>
+            </a>
 
-            <button
-              onClick={() =>
-                document.getElementById("contact")?.scrollIntoView({
-                  behavior: "smooth",
-                })
-              }
+            <a
+              href="#contact"
               className="flex-1 md:flex-none px-4 py-3 md:py-2 md:px-6 text-xs md:text-base rounded-full bg-black/40 border border-white/70 md:border-white text-white font-semibold hover:bg-black/60 transition-all duration-300 backdrop-blur-md text-center"
             >
               Contact Me
-            </button>
+            </a>
+
+            
           </motion.div>
         </div>
 

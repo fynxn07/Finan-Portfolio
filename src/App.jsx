@@ -7,20 +7,19 @@ import ScrollToHash from "./components/layout/ScrollToHash";
 
 import AppRoutes from "./routes/AppRoutes";
 
-// Navbar only makes sense on the home page, where the sections it links
-// to (#about, #skills, etc.) actually exist. On /projects/:slug it was
-// still rendering behind ProjectDetail's own MiniHeader — that's the
-// "shadowing" you're seeing. This wrapper lives inside BrowserRouter
-// (App itself can't call useLocation, since App is what renders the
-// Router) so it can check the current route and decide.
-function AppShell({ ready }) {
+function AppShell({ isLoading, setIsLoading }) {
   const location = useLocation();
+
   const isHome = location.pathname === "/";
 
   return (
     <>
+      <Preloader onComplete={() => setIsLoading(false)} />
+
       {isHome && <Navbar />}
-      <ScrollToHash ready={ready} />
+
+      <ScrollToHash ready={!isLoading} />
+
       <AppRoutes />
     </>
   );
@@ -32,7 +31,6 @@ function App() {
   useEffect(() => {
     document.body.style.overflow = isLoading ? "hidden" : "";
 
-
     return () => {
       document.body.style.overflow = "";
     };
@@ -40,8 +38,10 @@ function App() {
 
   return (
     <BrowserRouter>
-      <Preloader onComplete={() => setIsLoading(false)} />
-      <AppShell ready={!isLoading} />
+      <AppShell
+        isLoading={isLoading}
+        setIsLoading={setIsLoading}
+      />
     </BrowserRouter>
   );
 }
