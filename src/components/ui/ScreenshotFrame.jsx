@@ -1,11 +1,4 @@
-import React from 'react';
 
-// A "browser window" frame for real UI screenshots. No forced aspect
-// ratio here on purpose — the box's shape now comes entirely from the
-// image's own natural dimensions (chrome bar height + image at its real
-// ratio, scaled to fit the column width). That's what guarantees BOTH
-// no cropping AND no empty letterbox space: the frame is never a
-// different shape than the screenshot itself.
 const ScreenshotFrame = ({ src, alt, className = '' }) => (
   <div className={`w-full rounded-2xl overflow-hidden bg-white border border-gray-200 ${className}`}>
     {/* Fake browser chrome */}
