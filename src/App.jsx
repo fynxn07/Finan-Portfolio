@@ -5,6 +5,7 @@ import Navbar from "./components/layout/Navbar";
 import Preloader from "./components/layout/Preloader";
 import ScrollToHash from "./components/layout/ScrollToHash";
 
+
 import AppRoutes from "./routes/AppRoutes";
 
 function AppShell({ isLoading, setIsLoading }) {

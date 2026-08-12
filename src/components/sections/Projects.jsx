@@ -2,31 +2,19 @@
 
 // import React, { useState } from 'react';
 // import { motion } from 'framer-motion';
-// import { Link } from 'react-router-dom';
-// import { FiGithub, FiArrowUpRight } from 'react-icons/fi';
-// import projects from '../..//data/projects';
-
-// // Light-theme mockup cover — same "fake browser chrome" idea as before,
-// // re-colored for a white section instead of black.
-// const MockCover = ({ title }) => (
-//   <div className="relative w-full h-full rounded-2xl overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100 border border-gray-200">
-//     <div className="flex items-center gap-1.5 px-4 py-3 border-b border-gray-200 bg-white/60">
-//       <span className="w-2.5 h-2.5 rounded-full bg-gray-300" />
-//       <span className="w-2.5 h-2.5 rounded-full bg-gray-300" />
-//       <span className="w-2.5 h-2.5 rounded-full bg-gray-300" />
-//     </div>
-//     <div className="relative flex items-center justify-center h-[calc(100%-2.5rem)]">
-//       <div className="absolute w-40 h-40 rounded-full bg-[#ff2a2a]/10 blur-[60px]" />
-//       <span className="relative text-black/10 text-6xl md:text-7xl font-black tracking-tighter select-none">
-//         {title.slice(0, 2).toUpperCase()}
-//       </span>
-//     </div>
-//   </div>
-// );
+// import { Link, useNavigate } from 'react-router-dom';
+// import { FiGithub, FiArrowUpRight, FiServer } from 'react-icons/fi';
+// import projects from '../../data/projects';
 
 // const ProjectCard = ({ project, index }) => {
 //   const reversed = index % 2 === 1;
 //   const [tilt, setTilt] = useState({ x: 0, y: 0 });
+
+//   const navigate = useNavigate();
+
+//   const openProject = () => {
+//     navigate(`/projects/${project.slug}`);
+//   };
 
 //   const handleMouseMove = (e) => {
 //     const rect = e.currentTarget.getBoundingClientRect();
@@ -42,26 +30,33 @@
 //       whileInView={{ opacity: 1, y: 0 }}
 //       viewport={{ once: true, amount: 0.25 }}
 //       transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-//       className={`grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-14 items-center ${
-//         reversed ? 'md:[&>*:first-child]:order-2' : ''
-//       }`}
+//       className={`grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-14 items-center ${reversed ? 'md:[&>*:first-child]:order-2' : ''
+//         }`}
 //     >
-//       {/* Cover / mockup — links to case study */}
-//       <Link to={`/projects/${project.slug}`}>
+//       {/* Cover — real (placeholder) image, links to case study */}
 //         <motion.div
+//           onClick={openProject}
 //           onMouseMove={handleMouseMove}
 //           onMouseLeave={resetTilt}
 //           animate={{ rotateX: tilt.x, rotateY: tilt.y }}
 //           transition={{ type: 'spring', stiffness: 150, damping: 15 }}
-//           style={{ transformStyle: 'preserve-3d', perspective: 1000, willChange: 'transform' }}
+//           style={{ transformStyle: 'preserve-3d', perspective: 1000 }}
 //           className="relative aspect-[4/3] rounded-3xl p-2 cursor-pointer
 //                      bg-white border border-gray-200
 //                      shadow-[0_25px_60px_-20px_rgba(0,0,0,0.18)]"
 //         >
 //           <div className="absolute -inset-px rounded-3xl bg-gradient-to-br from-[#ff2a2a]/10 via-transparent to-transparent opacity-0 hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
-//           <MockCover title={project.title} />
+//           <div className="w-full h-full rounded-2xl overflow-hidden bg-gray-100 border border-gray-200">
+//             <img
+//               src={project.cover}
+//               alt={`${project.title} cover`}
+//               loading="lazy"
+//               decoding="async"
+//               className="w-full h-full object-cover"
+//             />
+//           </div>
 //         </motion.div>
-//       </Link>
+
 
 //       {/* Content */}
 //       <div className="relative z-10">
@@ -100,8 +95,8 @@
 
 //         <div className="flex flex-wrap items-center gap-4">
 //           <motion.div whileHover={{ scale: 1.04, y: -2 }} whileTap={{ scale: 0.97 }}>
-//             <Link
-//               to={`/projects/${project.slug}`}
+//             <button
+//               onClick={openProject}
 //               className="group inline-flex items-center gap-2 px-6 py-3 rounded-full
 //                          bg-[#ff2a2a] text-white font-bold text-sm
 //                          shadow-[0_10px_30px_-8px_rgba(255,42,42,0.5)]
@@ -109,7 +104,7 @@
 //             >
 //               View Case Study
 //               <FiArrowUpRight className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-//             </Link>
+//             </button>
 //           </motion.div>
 //           <motion.a
 //             href={project.github}
@@ -121,8 +116,22 @@
 //                        bg-black/5 border border-black/10 text-gray-900 font-bold text-sm
 //                        hover:bg-black/10 transition-colors duration-300"
 //           >
-//             <FiGithub /> Source
+//             <FiGithub /> {project.githubBackend ? 'Frontend' : 'Source'}
 //           </motion.a>
+//           {project.githubBackend && (
+//             <motion.a
+//               href={project.githubBackend}
+//               target="_blank"
+//               rel="noopener noreferrer"
+//               whileHover={{ scale: 1.04, y: -2 }}
+//               whileTap={{ scale: 0.97 }}
+//               className="inline-flex items-center gap-2 px-6 py-3 rounded-full
+//                          bg-black/5 border border-black/10 text-gray-900 font-bold text-sm
+//                          hover:bg-black/10 transition-colors duration-300"
+//             >
+//               <FiServer /> Backend
+//             </motion.a>
+//           )}
 //         </div>
 //       </div>
 //     </motion.div>
@@ -133,9 +142,8 @@
 //   return (
 //     <section
 //       id="projects"
-//       className="relative w-full bg-white pt-32 pb-40 px-6 md:px-12 overflow-hidden font-sans"
+//       className="relative w-full bg-white pt-32 pb-40 px-6 md:px-12 overflow-hidden font-sans "
 //     >
-//       {/* Soft red blush glows — same depth trick as the dark sections, tuned way down for a white bg */}
 //       <motion.div
 //         animate={{ y: [0, 30, 0], opacity: [0.5, 0.7, 0.5] }}
 //         transition={{ duration: 9, repeat: Infinity, ease: 'easeInOut' }}
@@ -173,28 +181,29 @@
 //         ))}
 //       </div>
 
-//       {/* Torn paper divider — matches the BLACK Contact section that follows */}
-//       {/* <div className="absolute bottom-0 left-0 w-full pointer-events-none z-30 translate-y-1">
-//         <svg viewBox="0 0 1200 120" preserveAspectRatio="none" className="w-full h-12 md:h-20 fill-black">
-//           <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V95.8C59.71,118.08,130.83,119.62,189.5,99.8,242.79,81.82,282.88,63.6,321.39,56.44Z" />
-//         </svg>
-//       </div> */}
+
 //     </section>
 //   );
 // };
 
 // export default Projects;
 
-
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FiGithub, FiArrowUpRight, FiServer } from 'react-icons/fi';
 import projects from '../../data/projects';
+import ScreenshotFrame from '../ui/ScreenshotFrame';
 
 const ProjectCard = ({ project, index }) => {
   const reversed = index % 2 === 1;
   const [tilt, setTilt] = useState({ x: 0, y: 0 });
+
+  const navigate = useNavigate();
+
+  const openProject = () => {
+    navigate(`/projects/${project.slug}`);
+  };
 
   const handleMouseMove = (e) => {
     const rect = e.currentTarget.getBoundingClientRect();
@@ -210,34 +219,25 @@ const ProjectCard = ({ project, index }) => {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.25 }}
       transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-      className={`grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-14 items-center ${
-        reversed ? 'md:[&>*:first-child]:order-2' : ''
-      }`}
+      className={`grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-14 items-center ${reversed ? 'md:[&>*:first-child]:order-2' : ''
+        }`}
     >
-      {/* Cover — real (placeholder) image, links to case study */}
-      <Link to={`/projects/${project.slug}`}>
-        <motion.div
-          onMouseMove={handleMouseMove}
-          onMouseLeave={resetTilt}
-          animate={{ rotateX: tilt.x, rotateY: tilt.y }}
-          transition={{ type: 'spring', stiffness: 150, damping: 15 }}
-          style={{ transformStyle: 'preserve-3d', perspective: 1000 }}
-          className="relative aspect-[4/3] rounded-3xl p-2 cursor-pointer
-                     bg-white border border-gray-200
-                     shadow-[0_25px_60px_-20px_rgba(0,0,0,0.18)]"
-        >
-          <div className="absolute -inset-px rounded-3xl bg-gradient-to-br from-[#ff2a2a]/10 via-transparent to-transparent opacity-0 hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
-          <div className="w-full h-full rounded-2xl overflow-hidden bg-gray-100 border border-gray-200">
-            <img
-              src={project.cover}
-              alt={`${project.title} cover`}
-              loading="lazy"
-              decoding="async"
-              className="w-full h-full object-cover"
-            />
-          </div>
-        </motion.div>
-      </Link>
+      {/* Cover — real screenshot, framed like a browser window so the
+          FULL image is always visible, never cropped */}
+      <motion.div
+        onClick={openProject}
+        onMouseMove={handleMouseMove}
+        onMouseLeave={resetTilt}
+        animate={{ rotateX: tilt.x, rotateY: tilt.y }}
+        transition={{ type: 'spring', stiffness: 150, damping: 15 }}
+        style={{ transformStyle: 'preserve-3d', perspective: 1000 }}
+        className="relative rounded-3xl p-2 cursor-pointer
+                   bg-white border border-gray-200
+                   shadow-[0_25px_60px_-20px_rgba(0,0,0,0.18)]"
+      >
+        <div className="absolute -inset-px rounded-3xl bg-gradient-to-br from-[#ff2a2a]/10 via-transparent to-transparent opacity-0 hover:opacity-100 transition-opacity duration-500 pointer-events-none z-10" />
+        <ScreenshotFrame src={project.cover} alt={`${project.title} cover`} />
+      </motion.div>
 
       {/* Content */}
       <div className="relative z-10">
@@ -276,8 +276,8 @@ const ProjectCard = ({ project, index }) => {
 
         <div className="flex flex-wrap items-center gap-4">
           <motion.div whileHover={{ scale: 1.04, y: -2 }} whileTap={{ scale: 0.97 }}>
-            <Link
-              to={`/projects/${project.slug}`}
+            <button
+              onClick={openProject}
               className="group inline-flex items-center gap-2 px-6 py-3 rounded-full
                          bg-[#ff2a2a] text-white font-bold text-sm
                          shadow-[0_10px_30px_-8px_rgba(255,42,42,0.5)]
@@ -285,7 +285,7 @@ const ProjectCard = ({ project, index }) => {
             >
               View Case Study
               <FiArrowUpRight className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-            </Link>
+            </button>
           </motion.div>
           <motion.a
             href={project.github}

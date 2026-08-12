@@ -1,11 +1,21 @@
-// Single source of truth for project content — used by both
-// Projects.jsx (teaser cards) and ProjectDetail.jsx (full case study).
-//
-// `cover` / `gallery` currently point to Lorem Picsum placeholder photos
-// (free, no-attribution stock images made exactly for this purpose) so
-// the site looks finished instead of showing empty mockup frames. Swap
-// each URL for your own screenshot whenever you have one — same field,
-// same shape, nothing else needs to change.
+import hero from '../assets/projects/hero.png';
+import dashboard from '../assets/projects/dashboard.png';
+import menu from '../assets/projects/menu.png';
+import kitchen from '../assets/projects/kitchen.png';
+import join from '../assets/projects/join.png';
+import cart from '../assets/projects/cart.png';
+import status from '../assets/projects/status.png';
+import decor from '../assets/projects/decor.jpeg';
+import pic from '../assets/projects/pic.jpeg';
+import service from '../assets/projects/service.jpeg';
+import project from '../assets/projects/project.jpeg';
+import medical  from '../assets/projects/medical.png';
+import categories from '../assets/projects/categories.png';
+import wishlist from '../assets/projects/wishlist.png';
+import payment from '../assets/projects/payment.png';
+import doctor from '../assets/projects/doctor.png';
+import activity from '../assets/projects/activity.png';
+import login from '../assets/projects/login.png';
 
 const projects = [
   {
@@ -20,13 +30,16 @@ const projects = [
       'Deployed production services on AWS EC2 with Nginx + Gunicorn',
     ],
     stack: ['React.js', 'Django REST Framework', 'PostgreSQL', 'AWS EC2', 'QR Access'],
-    live: null,
-    github: 'https://github.com/fynxn07',
-    cover: 'https://picsum.photos/seed/menusnap-cover/1200/675',
+    live: 'https://menusnap-frontend.vercel.app/',
+    github: 'https://github.com/fynxn07/menusnap-frontend',
+    githubBackend: 'https://github.com/fynxn07/menusnap-backend',
+    cover: hero,
     gallery: [
-      'https://picsum.photos/seed/menusnap-1/800/600',
-      'https://picsum.photos/seed/menusnap-2/800/600',
-      'https://picsum.photos/seed/menusnap-3/800/600',
+      dashboard,
+      menu,
+      join,
+      cart,
+      status,
     ],
     problem:
       'Small restaurants needed a way to update menus instantly (prices, availability, specials) without reprinting physical menus or paying for a bulky POS system.',
@@ -53,11 +66,12 @@ const projects = [
     live: 'https://interior-frontend-467l.vercel.app/',
     github: 'https://github.com/fynxn07/Interior-frontend',
     githubBackend: 'https://github.com/fynxn07/Interior-backend',
-    cover: 'https://picsum.photos/seed/ok-decoration-cover/1200/675',
+    cover: decor,
     gallery: [
-      'https://picsum.photos/seed/ok-decoration-1/800/600',
-      'https://picsum.photos/seed/ok-decoration-2/800/600',
-      'https://picsum.photos/seed/ok-decoration-3/800/600',
+      pic,
+      service,
+      project
+
     ],
     problem:
       'Interior design businesses typically take orders informally through calls or WhatsApp, with no organized catalog, no way for customers to browse services on their own, and no structured record of what was quoted to whom.',
@@ -80,13 +94,14 @@ const projects = [
       'CI/CD pipeline for automated builds and deployments',
     ],
     stack: ['React', 'Django REST Framework', 'PostgreSQL', 'JWT Auth', 'CI/CD'],
-    live: 'https://medizone-frontend-react.vercel.app',
-    github: 'https://github.com/fynxn07',
-    cover: 'https://picsum.photos/seed/medizone-cover/1200/675',
+    live: 'https://medizone-frontend-react.vercel.app/',
+    github: 'https://github.com/fynxn07/medizone-frontend-react',
+    githubBackend: 'https://github.com/fynxn07/medizone-backend-python',
+    cover: medical,
     gallery: [
-      'https://picsum.photos/seed/medizone-1/800/600',
-      'https://picsum.photos/seed/medizone-2/800/600',
-      'https://picsum.photos/seed/medizone-3/800/600',
+      categories,
+      wishlist,
+      payment,
     ],
     problem:
       'Medical retailers often rely on informal WhatsApp orders or generic templated storefronts that don\u2019t handle inventory, auth, or checkout reliably at scale.',
@@ -110,12 +125,11 @@ const projects = [
     ],
     stack: ['Flutter', 'Firebase', 'Realtime Alerts', 'Sensors'],
     live: null,
-    github: 'https://github.com/fynxn07',
-    cover: 'https://picsum.photos/seed/elderlycare-cover/1200/675',
+    github: 'https://github.com/fynxn07/Elderly-care',
+    cover: doctor,
     gallery: [
-      'https://picsum.photos/seed/elderlycare-1/800/600',
-      'https://picsum.photos/seed/elderlycare-2/800/600',
-      'https://picsum.photos/seed/elderlycare-3/800/600',
+      login,
+      activity,
     ],
     problem:
       'Elderly users needed a way to signal for help or be automatically flagged during a fall or irregular movement, without navigating a complex interface.',
